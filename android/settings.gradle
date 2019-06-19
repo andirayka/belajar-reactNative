@@ -1,0 +1,3 @@
+rootProject.name = 'slicingProjectHari3Pelatihan'
+
+include ':app'
