@@ -14,7 +14,9 @@ export default class Home extends Component {
 
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      warnausername: "#CCCCCC",
+      warnapassword: "#CCCCCC"
     };
   }
 
@@ -45,32 +47,44 @@ export default class Home extends Component {
       <ScrollView style={styles.container}>
         <StatusBar backgroundColor="#1cbc9b" barStyle="dark-content" />
 
+        <Text style={styles.judul}>Halo, Selamat Datang!</Text>
+        <Text style={styles.subjudul1}>Sudah ke kebun hari ini?</Text>
+        <Text style={styles.subjudul2}>
+          Segera pergi kebun biar cepat kaya!
+        </Text>
+
+        <Text style={styles.label}>Username</Text>
         <TextInput
           ref={input => {
             this.inputUsername = input;
           }}
-          style={styles.inputText}
+          style={[styles.inputText, { borderColor: this.state.warnausername }]}
           underlineColorAndroid="transparent"
           placeholder="Email"
           placeholderTextColor="#999494"
           autoCapitalize="none"
           returnKeyType="next"
+          onFocus={() => this.setState({ warnausername: "#1cbc9b" })}
+          onBlur={() => this.setState({ warnausername: "#CCCCCC" })}
           onChangeText={text => this.handleInputText("username", text)}
           onSubmitEditing={() => {
             this.inputPassword.focus();
           }}
         />
 
+        <Text style={styles.label}>Password</Text>
         <TextInput
           ref={input => {
             this.inputPassword = input;
           }}
-          style={styles.inputText}
-          placeholder="Ketik password baru"
+          style={[styles.inputText, { borderColor: this.state.warnapassword }]}
+          placeholder="Password"
           underlineColorAndroid="transparent"
           returnKeyType="done"
           secureTextEntry={true}
           autoCapitalize="none"
+          onFocus={() => this.setState({ warnapassword: "#1cbc9b" })}
+          onBlur={() => this.setState({ warnapassword: "#CCCCCC" })}
           onChangeText={text => this.handleInputText("password", text)}
         />
 
@@ -90,14 +104,31 @@ export default class Home extends Component {
 }
 
 const styles = StyleSheet.create({
+  subjudul1: {
+    fontSize: 16,
+    marginBottom: 2
+  },
+  subjudul2: {
+    fontSize: 16,
+    marginBottom: 17
+  },
+  judul: {
+    fontWeight: "bold",
+    fontSize: 23,
+    marginTop: 11,
+    marginBottom: 10
+  },
+  label: {
+    fontWeight: "bold"
+  },
   inputText: {
-    marginTop: 15,
+    marginTop: 5,
     marginBottom: 15,
     minHeight: 25,
     paddingLeft: 15,
     borderColor: "#c1c1c1",
     borderRadius: 4,
-    borderWidth: 1
+    borderWidth: 1.7
   },
   container: {
     paddingHorizontal: 20,
