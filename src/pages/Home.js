@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-  View,
+  ScrollView,
   Text,
   TextInput,
   StyleSheet,
@@ -24,38 +24,46 @@ export default class Home extends Component {
     });
   };
 
-  submitLogin = () => {
-    if (this.state.username == "admin" && this.state.password == "admin") {
-      alert("Login Berhasil");
+  warnaSubmit = () => {
+    if (this.state.username == "" || this.state.password == "") {
+      return styles.buttonDisabled;
     } else {
-      alert("Login Gagal");
+      return styles.buttonEnabled;
+    }
+  };
+
+  submitLogin = () => {
+    if (this.state.username == "" || this.state.password == "") {
+      return true;
+    } else {
+      return false;
     }
   };
 
   render() {
     return (
-      // -------------------------ANDI-----------------------
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <StatusBar backgroundColor="#1cbc9b" barStyle="dark-content" />
 
         <TextInput
           ref={input => {
-            this.username = input;
+            this.inputUsername = input;
           }}
           style={styles.inputText}
           underlineColorAndroid="transparent"
           placeholder="Email"
           placeholderTextColor="#999494"
           autoCapitalize="none"
-          onChange={text => this.handleInputText("username", text)}
+          returnKeyType="next"
+          onChangeText={text => this.handleInputText("username", text)}
           onSubmitEditing={() => {
-            this.password.focus();
+            this.inputPassword.focus();
           }}
         />
 
         <TextInput
           ref={input => {
-            this.password = input;
+            this.inputPassword = input;
           }}
           style={styles.inputText}
           placeholder="Ketik password baru"
@@ -63,13 +71,20 @@ export default class Home extends Component {
           returnKeyType="done"
           secureTextEntry={true}
           autoCapitalize="none"
-          onChange={text => this.handleInputText("username", text)}
+          onChangeText={text => this.handleInputText("password", text)}
         />
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          // style={styles.buttonDisabled}
+          style={this.warnaSubmit()}
+          // disabled={this.state.username == "" || this.state.password == ""}
+          disabled={this.submitLogin()}
+        >
           <Text style={styles.buttonText}>Masuk</Text>
         </TouchableOpacity>
-      </View>
+
+        <Text style={styles.lupaSandi}>Lupa kata sandi?</Text>
+      </ScrollView>
     );
   }
 }
@@ -79,6 +94,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 15,
     minHeight: 25,
+    paddingLeft: 15,
     borderColor: "#c1c1c1",
     borderRadius: 4,
     borderWidth: 1
@@ -87,8 +103,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10
   },
-  button: {
+  buttonEnabled: {
     backgroundColor: "#1cbc9b",
+    padding: 15,
+    borderRadius: 5,
+    marginTop: 10
+  },
+  buttonDisabled: {
+    backgroundColor: "#CCCCCC",
     padding: 15,
     borderRadius: 5,
     marginTop: 10
@@ -96,5 +118,10 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     textAlign: "center"
+  },
+  lupaSandi: {
+    color: "#1cbc9b",
+    textAlign: "center",
+    marginTop: 12
   }
 });
